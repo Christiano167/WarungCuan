@@ -1,0 +1,8 @@
+{
+  "name": "Remix Kasir Mama - POS \u0026 Stok Warung",
+  "description": "Aplikasi POS praktis ramah sentuhan untuk tablet Xiaomi Pad SE dengan fitur kasir, stok barang masuk dari sales/mandiri, retur, buku hutang, dan laporan laba rugi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
