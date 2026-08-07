@@ -140,7 +140,3 @@ Isi variabel env tergantung integrasi yang dipakai (mis. API keys, konfigurasi s
 - Gunakan GitHub Issues untuk laporan bug, permintaan fitur, atau diskusi implementasi.
 
 ---
-Terjemahan fitur dan nama menu ke Bahasa Indonesia sudah disesuaikan mengikuti label di kode (`App.tsx` dan `types.ts`). Jika Anda mau, saya bisa:
-- Menambahkan badge (build, license) dan contoh screenshot ke README,
-- Membuat template CONTRIBUTING.md dan ISSUE/PR template,
-- Atau langsung membuat file README.md dan commit ke repository.
