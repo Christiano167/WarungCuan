@@ -1,142 +1,88 @@
 # WarungCuan
 
-Buat warung mama makin cuan — aplikasi Point-of-Sale (POS) berbasis web untuk membantu pencatatan penjualan, manajemen stok, retur, hutang pelanggan, dan laporan sederhana yang mudah digunakan.
+WarungCuan adalah prototipe aplikasi kasir dan pengelolaan warung berbasis web. Aplikasi menyediakan alur transaksi, katalog produk, stok, retur, hutang pelanggan, laporan, dan pengaturan toko.
 
-## Fitur Utama
-- Kasir (POS) cepat untuk transaksi harian
-- Katalog stok & pengaturan harga termasuk multiple price tiers
-- Pencatatan stok masuk (supplier / sales)
-- Retur barang dan penyesuaian stok
-- Buku hutang pelanggan (kasbon) dan pencatatan pembayaran
-- Laporan penjualan & laba rugi
-- Pengaturan toko (nama, footer, ukuran cetak struk, dsb.)
+## Fitur
 
-## Stack
-- Language: TypeScript (React)
-- Framework / runtime: Vite + React (client-side)
-- Notable libraries:
-  - Tailwind CSS (UI)
-  - Recharts (grafik / laporan)
-  - lucide-react (ikon)
-  - dotenv / express (untuk kebutuhan env / server ringan jika diperlukan)
+- **Kasir:** keranjang belanja, jumlah barang, metode pembayaran tunai/transfer/hutang, dan struk.
+- **Produk dan stok:** katalog, harga jual, beberapa pilihan satuan/harga, dan penyesuaian stok.
+- **Stok masuk:** pencatatan penambahan barang.
+- **Retur:** pencatatan retur barang.
+- **Hutang:** data pelanggan, pencatatan bon, dan pembayaran hutang.
+- **Laporan:** ringkasan transaksi dan laporan penjualan.
+- **Pengaturan:** identitas toko dan preferensi aplikasi.
+- **Backup data:** ekspor dan impor data dalam format JSON.
 
-## Struktur Proyek (top-level)
+## Teknologi
 
-```
-.env.example          # contoh variabel lingkungan
-.gitignore
-assets/               # aset statis (gambar, icon, dsb.)
-bun.lock              # file lock (mengindikasikan kompatibilitas Bun)
-index.html
-metadata.json
-package.json
-src/                  # sumber aplikasi (TypeScript + React)
-tsconfig.json
-vite.config.ts
-```
-
-Struktur penting dalam src/:
-
-```
-src/
-  App.tsx             # entry UI utama, routing tab internal
-  main.tsx            # mount React
-  index.css           # gaya global (Tailwind)
-  types.ts            # tipe TypeScript untuk domain (produk, transaksi, hutang, dsb.)
-  context/
-    StoreContext.tsx  # state global / store aplikasi
-  components/
-    POSView.tsx
-    StockCatalog.tsx
-    StockIncomingView.tsx
-    StockReturnView.tsx
-    DebtView.tsx
-    ReportView.tsx
-    SettingsView.tsx
-    Sidebar.tsx
-    StockAdjustmentModal.tsx
-  utils/               # utilitas umum
-  data/                # data mock / seed (jika ada)
-```
-
-Bagaimana semuanya bekerja (singkat):
-- Aplikasi adalah SPA React yang di-boot melalui Vite. `StoreContext` menyediakan state global (active tab, pengaturan toko, daftar produk, transaksi). `App.tsx` menampilkan sidebar / menu dan memilih view yang relevan (POS, Stok, Laporan, dsb.). Komponen di `src/components` menangani UI dan logika fitur utama.
+- React 19 dan TypeScript
+- Vite 6
+- Tailwind CSS 4
+- Recharts
+- lucide-react
+- Context API untuk state aplikasi
 
 ## Persyaratan
-- Node.js (saran: Node 18+) atau Bun (repo mengandung `bun.lock`).
-- NPM / Yarn / Bun untuk instalasi dependency.
 
-## Instalasi (dari clone)
-Jalankan perintah berikut di terminal:
+- Node.js yang kompatibel dengan Vite 6.
+- npm.
+
+## Menjalankan secara lokal
 
 ```bash
-# clone repo
 git clone https://github.com/Christiano167/WarungCuan.git
 cd WarungCuan
-
-# instal dependency (pilih salah satu)
 npm install
-# atau
-# yarn
-# atau (jika menggunakan Bun)
-# bun install
-
-# jalankan development server
 npm run dev
 ```
 
-Aplikasi dev berjalan di port 3000 (script dev mengeksekusi `vite --port=3000 --host=0.0.0.0`).
+Vite berjalan pada port **3000** sesuai script di `package.json`.
 
-Perintah penting lainnya:
+Buka [http://localhost:3000](http://localhost:3000).
 
-```bash
-# build untuk produksi
-npm run build
+## Script
 
-# preview hasil build (lokal)
-npm run preview
+| Perintah | Kegunaan |
+| --- | --- |
+| `npm run dev` | Menjalankan server pengembangan |
+| `npm run build` | Membuat build produksi di `dist/` |
+| `npm run preview` | Preview build produksi |
+| `npm run lint` | Pemeriksaan TypeScript dengan `tsc --noEmit` |
 
-# bersihkan output
-npm run clean
+## Penyimpanan data
 
-# cek tipe / lint (TypeScript)
-npm run lint
+Data aplikasi saat ini disimpan di `localStorage` browser. Artinya:
+
+- Data tidak otomatis tersinkron ke perangkat atau browser lain.
+- Menghapus data situs/browser dapat menghilangkan data yang tersimpan.
+- Gunakan fitur ekspor JSON secara berkala dan simpan file backup di tempat aman.
+- Fitur impor JSON dapat digunakan untuk memulihkan data yang diekspor.
+
+Aplikasi ini belum menggunakan akun pengguna atau database cloud untuk sinkronisasi data pada implementasi yang diperiksa.
+
+## Environment
+
+Repository menyediakan file `.env.example` dengan variabel `GEMINI_API_KEY` dan `APP_URL` untuk kebutuhan runtime/integrasi yang sesuai. Di Google AI Studio, ikuti pengaturan Secrets dan environment yang disediakan platform. Jangan menaruh API key asli ke repository atau membagikannya melalui screenshot/log.
+
+Jika menjalankan di luar AI Studio, pastikan cara pemuatan environment sesuai dengan runtime yang digunakan. Jangan menganggap seluruh variabel `.env` otomatis tersedia di kode browser Vite.
+
+## Struktur utama
+
+```text
+.
+├── assets/
+├── src/
+│   ├── components/   # Tampilan kasir, stok, hutang, laporan, pengaturan
+│   ├── context/      # StoreContext dan state aplikasi
+│   ├── data/         # Data awal/demo
+│   ├── utils/        # Helper dan formatter
+│   ├── App.tsx
+│   └── main.tsx
+├── .env.example
+├── package.json
+└── vite.config.ts
 ```
 
-## Konfigurasi environment
-- Ada file `.env.example` di root. Salin dan ubah sesuai kebutuhan:
+## Status dan batasan
 
-```bash
-cp .env.example .env
-# lalu edit .env sesuai variabel yang diperlukan
-```
-
-Isi variabel env tergantung integrasi yang dipakai (mis. API keys, konfigurasi server). Jika aplikasi hanya frontend, file .env biasanya untuk konfigurasi build atau koneksi ke layanan eksternal.
-
-## Cara penggunaan singkat
-- Buka aplikasi di browser (http://localhost:3000)
-- Gunakan menu (Kasir, Stok & Harga, Stok Masuk, Retur, Hutang, Laporan, Pengaturan)
-- Di Pengaturan, ubah nama toko dan preferensi lain agar muncul di header/struk
-
-## Pengembangan & kontribusi
-- Ikuti pola komponen di `src/components` dan tipe di `src/types.ts`.
-- Gunakan `StoreContext` untuk state global agar perilaku konsisten.
-- Buka issue jika menemukan bug atau fitur yang ingin ditambahkan; kirim PR dengan deskripsi jelas dan screenshot bila perlu.
-- Jalankan `npm run lint` sebelum PR untuk memastikan tidak ada error tipe.
-
-## Testing & quality
-- Saat ini tidak ada suite testing yang otomatis — tambahkan tests sesuai konvensi repo jika ingin memperkuat kualitas.
-- Gunakan TypeScript (ketat) dan `npm run lint` untuk cek tipe.
-
-## Deployment (singkat)
-- Build: `npm run build`
-- Hasil build ada di `dist/`. Deploy sebagai static site (Netlify, Vercel, atau server static lain). Jika menggunakan server Node/Express untuk fitur backend, sesuaikan konfigurasi server untuk serve static files dari `dist/`.
-
-## Lisensi
-- Belum ditentukan dalam repo — tambahkan file `LICENSE` sesuai preferensi (mis. MIT) jika ingin mengizinkan kontribusi publik.
-
-## Kontak
-- Pemilik repo: @Christiano167  
-- Gunakan GitHub Issues untuk laporan bug, permintaan fitur, atau diskusi implementasi.
-
----
+WarungCuan merupakan aplikasi frontend yang menyimpan data pada browser. Sebelum dipakai sebagai sistem operasional utama, uji alur transaksi dan lakukan backup data secara rutin. README ini tidak menjanjikan sinkronisasi cloud, multi-user, atau integrasi pembayaran yang belum tersedia pada implementasi saat ini.
